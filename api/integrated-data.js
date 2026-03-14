@@ -20,12 +20,13 @@ export default async function handler(req, res) {
     try {
 
       const json = JSON.parse(text);
-      res.status(200).json(json);
+
+      return res.status(200).json(json);
 
     } catch {
 
-      res.status(500).json({
-        error: "Backend did not return JSON",
+      return res.status(500).json({
+        error: "Backend returned non JSON",
         backend_response: text
       });
 
@@ -33,7 +34,7 @@ export default async function handler(req, res) {
 
   } catch (error) {
 
-    res.status(500).json({
+    return res.status(500).json({
       error: "Backend connection failed",
       message: error.message
     });
