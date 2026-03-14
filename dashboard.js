@@ -126,11 +126,15 @@ async function fetchStatus() {
 // ─────────────────────────────────────────────────────────────
 async function fetchIntegratedData(lat, lon) {
   try {
-    const res = await fetch(`${API_BASE}/api/integrated-data/${lat}/${lon}`);
+    const res = await fetch(`${API_BASE}/integrated-data/${lat}/${lon}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const ct = res.headers.get("content-type") || "";
-    if (!ct.includes("application/json")) throw new Error("Non-JSON response from backend");
-    const data = await res.json();
+    if (!ct.includes("application/json")) {
+         const text = await res.text();
+         console.error("Backend returned:", text);
+         throw new Error("Backend returned non-JSON");
+         }
+     const data = await res.json();
 
     if (data.weather?.success) {
       kpiTemp.textContent  = fmtNum(data.weather.data.temperature, 1);
