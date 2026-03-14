@@ -146,8 +146,10 @@ async function fetchIntegratedData(lat, lon) {
     }
 
     if (data.solar?.success) {
-      kpiSolarHours.textContent = fmtNum(data.solar.data.max_sunshine_hours, 0);
-      kpiSolarCap.textContent   = fmtNum(data.solar.data.panel_capacity_watts, 0);
+     // kpiSolarHours.textContent = fmtNum(data.solar.data.max_sunshine_hours, 0);
+      //kpiSolarCap.textContent   = fmtNum(data.solar.data.panel_capacity_watts, 0);
+      kpiSolarHours.textContent = fmtNum(data.solar.data.sunshine_hours, 1);
+      kpiSolarCap.textContent   = fmtNum(data.solar.data.uvi, 1);
     } else {
       kpiSolarHours.textContent = kpiSolarCap.textContent = "—";
     }
