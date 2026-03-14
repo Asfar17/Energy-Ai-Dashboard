@@ -5,7 +5,7 @@
 // ─────────────────────────────────────────────────────────────
 const API_BASE = (window._env && window._env.API_BASE)
   ? window._env.API_BASE
-  : "/api";   // ← replace YOUR_GCE_IP
+  : "http://136.114.173.194:5000/health";   // ← replace YOUR_GCE_IP
 
 // ─────────────────────────────────────────────────────────────
 // DOM refs
