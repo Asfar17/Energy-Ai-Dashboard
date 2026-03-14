@@ -5,7 +5,7 @@
 // ─────────────────────────────────────────────────────────────
 const API_BASE = (window._env && window._env.API_BASE)
   ? window._env.API_BASE
-  : "http://136.114.173.194:5000";   // ← replace YOUR_GCE_IP
+  : "/api";   // ← replace YOUR_GCE_IP
 
 // ─────────────────────────────────────────────────────────────
 // DOM refs
@@ -126,7 +126,9 @@ async function fetchStatus() {
 // ─────────────────────────────────────────────────────────────
 async function fetchIntegratedData(lat, lon) {
   try {
-    const res = await fetch(`${API_BASE}/integrated-data/${lat}/${lon}`);
+   // const res = await fetch(`${API_BASE}/integrated-data/${lat}/${lon}`);
+    const res = await fetch(`${API_BASE}/integrated-data?lat=${lat}&lon=${lon}`)
+
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const ct = res.headers.get("content-type") || "";
     if (!ct.includes("application/json")) {
@@ -172,7 +174,8 @@ async function searchLocation() {
   if (!address) { locationStatus.textContent = "Enter an address first"; return; }
   try {
     locationStatus.textContent = "Searching…";
-    const res  = await fetch(`${API_BASE}/api/geocode`, {
+   // const res  = await fetch(`${API_BASE}/api/geocode`, {
+    const res  = await fetch(`${API_BASE}/geocode`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ address })
