@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Energy AI — Live Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2"></script>
+</head>
+<body>
+  <header>
+    <h1>Energy AI — Live Dashboard</h1>
+    <div class="meta">
+      <span id="statusText">Connecting…</span>
+      <button id="refreshBtn">Refresh</button>
+      <label>Window (pts): <input id="windowN" type="number" min="20" max="5000" step="10" value="120" /></label>
+      <label>Poll (ms): <input id="pollMs" type="number" min="500" step="500" value="5000" /></label>
+    </div>
+    <div class="location-search">
+      <input id="addressInput" type="text" placeholder="Enter address or use current location" />
+      <button id="searchBtn">Search Location</button>
+      <button id="currentLocationBtn">Use Current Location</button>
+      <span id="locationStatus"></span>
+    </div>
+  </header>
+
+  <main>
+    <section class="cards">
+      <div class="card">
+        <div class="card-title">Latest Decision</div>
+        <div class="card-kpi"><span id="kpiDecision">—</span></div>
+        <div class="card-sub">Probability: <span id="kpiProb">—</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">PV Forecast (t+H)</div>
+        <div class="card-kpi"><span id="kpiPV">—</span> W</div>
+        <div class="card-sub">Last updated: <span id="kpiTime">—</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Load (current)</div>
+        <div class="card-kpi"><span id="kpiLoad">—</span> W</div>
+        <div class="card-sub">Grid available: <span id="kpiGrid">—</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Weather</div>
+        <div class="card-kpi"><span id="kpiTemp">—</span>°C</div>
+        <div class="card-sub">Cloud: <span id="kpiCloud">—</span>%</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Solar Potential</div>
+        <div class="card-kpi"><span id="kpiSolarHours">—</span> hrs/yr</div>
+        <div class="card-sub">Capacity: <span id="kpiSolarCap">—</span> W</div>
+      </div>
+    </section>
+
+    <section class="ai-insights">
+      <h2>AI-Powered Insights</h2>
+      <div id="aiInsightsContent" class="insights-box"><p>Loading insights...</p></div>
+      <button id="refreshInsightsBtn">Refresh Insights</button>
+    </section>
+
+    <section class="charts">
+      <div>
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+          <strong>PV Pred (W)</strong>
+          <button id="pvReset">Reset Zoom</button>
+          <button data-range="60" class="pvRange">1h</button>
+          <button data-range="360" class="pvRange">6h</button>
+          <button data-range="1440" class="pvRange">24h</button>
+        </div>
+        <canvas id="pvChart"></canvas>
+        <div class="hint">Scroll to zoom · Drag to pan</div>
+      </div>
+      <div>
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+          <strong>Solar Probability</strong>
+          <button id="probReset">Reset Zoom</button>
+          <button data-range="60" class="probRange">1h</button>
+          <button data-range="360" class="probRange">6h</button>
+          <button data-range="1440" class="probRange">24h</button>
+        </div>
+        <canvas id="probChart"></canvas>
+      </div>
+    </section>
+
+    <section class="table">
+      <h2>Recent Events</h2>
+      <table id="eventsTable">
+        <thead>
+          <tr>
+            <th>Time</th><th>PV Pred (W)</th><th>Prob (Solar)</th>
+            <th>Decision</th><th>Load (W)</th><th>Cloud</th><th>Temp (°C)</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
