@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   try {
 
     const backendURL =
-      `http://104.198.225.12:5000/api/integrated-data/${lat}/${lon}`;
+      `http://136.115.91.50:5000/api/integrated-data/${lat}/${lon}`;
 
     const response = await fetch(backendURL);
 
