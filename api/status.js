@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   try {
 
     const backend = await fetch(
-      `http://136.115.91.50:5000/status?n=${n}`
+      `http://35.225.191.36:5000/status?n=${n}`
     );
 
     const data = await backend.json();
