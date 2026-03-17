@@ -3,7 +3,7 @@ export default async function handler(req, res) {
   try {
 
     const backend = await fetch(
-      "http://136.115.91.50:5000/api/geocode",
+      "http://35.225.191.36:5000/api/geocode",
       {
         method: "POST",
         headers: {
